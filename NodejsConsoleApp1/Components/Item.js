@@ -48,6 +48,9 @@ class Item {
     getNStateDelay() {
         return this.ItemDelay;
     }
+    getItemState() {
+        return this.ItemStateValue;
+    }
 
     async getStateDelayed(delay, getState) {
         await sleep(delay);

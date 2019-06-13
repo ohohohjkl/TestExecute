@@ -1,0 +1,111 @@
+{
+	"1133456": {
+		"id": "1133456",
+		"name": "Tưới cây",
+		"trigger": {
+			"type": "timer",	
+			"configuration": {				
+				"start": "0 6 * * * ",
+				"end" : "0 7 * * * ",
+				"counter": 1
+			}					    
+		}, 
+		"input": [
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-3",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				}
+			},
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-7",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			}		 
+		 ],
+		 "seq_in": [
+		 ],		 
+		 "output": [
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-1",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			},
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-5",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			}
+		 ],
+		 "seq_out": [
+		 ]
+	},
+	"1133567": {
+		"id": "1133567",
+		"name": "An ninh vào nhà",
+		"trigger": {
+			"type": "timer",
+      "configuration": {
+        "start": "28 3 * * *",
+        "end": "28 3 * * * ",
+        "counter": 1
+      }							    
+		},
+		 
+		 "input": [
+			{	
+				"type": "device",
+			    "id": "0x00dc526737282-1",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			},
+			{	
+				"type": "device",
+			    "id": "0x00dc526628564-3",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			}		 
+		 ],	
+		"seq_in": [
+			{"id": "0x00dc526737282-1", "delay": 5000}, 
+			{"id": "0x00dc526628564-3", "delay": 0}
+		 ],		 
+		 "output": [
+			{	
+				"type": "device",
+			    "id": "0x00dc282636463-5",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				}
+			},
+			{	
+				"type": "device",
+			    "id": "0x00dc52cbc58736-7",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				}
+			}
+		 ],
+		 "seq_out": [
+			{"id": "0x00dc282636463-5", "delay": 5000}, 
+			{"id": "0x00dc52cbc58736-7", "delay": 0}
+		 ]
+	}
+}
