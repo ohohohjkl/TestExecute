@@ -1,10 +1,13 @@
 ﻿"use strict"
 
-var Util = require('../utils/utils');
+var UTILS = require('../utils/utils');
 
 class RuleContainer {
     constructor(rules) {
         this.RuleList = rules;
+        this.getEndpointState = this.getEndpointState.bind(this);
+        this.MapRule = this.MapRule.bind(this);
+
     }
 
     getRuleList() {
@@ -24,9 +27,9 @@ class RuleContainer {
     }
 
     getTriggerList() {
-        var x;
+        var x = [];
         if (this.RuleList !== undefined && this.RuleList.length !== 0) {
-            for (i = 0; i < this.RuleList.length; i++) {
+            for (let i = 0; i < this.RuleList.length; i++) {
                 if (!UTILS.isEmptyObject(this.RuleList[i].trigger)) {
                     var t = {
                         id: this.RuleList[i].RuleId,
@@ -40,9 +43,9 @@ class RuleContainer {
     }
 
     getInputList() {
-        var x;
+        var x = [];
         if (this.RuleList !== undefined && this.RuleList.length !== 0) {
-            for (i = 0; i < this.RuleList.length; i++) {
+            for (let i = 0; i < this.RuleList.length; i++) {
                 if (this.RuleList[i].RuleInput.length > 0) {
                     var t = {
                         id: this.RuleList[i].RuleId,
@@ -58,7 +61,7 @@ class RuleContainer {
     //get Rule from id
     getRuleFromId(id) {
         if (this.RuleList !== undefined && this.RuleList.length !== 0) {
-            for (i = 0; i < this.RuleList.length; i++) {
+            for (let i = 0; i < this.RuleList.length; i++) {
                 if (this.RuleList[i].RuleId === id) {
                     return this.RuleList[i];
                 }
@@ -70,11 +73,13 @@ class RuleContainer {
     //start list rule()
     startRuleList() {
         //set rulelist run phuong thuc crontime
-        if (this.RuleList !== undefined && this.RuleList.length !== 0) {
-            for (i = 0; i < this.RuleList.length; i++) {
-                this.RuleList[i].crontimeCheck();
-            }
-        }
+        //if (this.RuleList !== undefined && this.RuleList.length !== 0) {
+        //    for (let i = 0; i < this.RuleList.length; i++) {
+        //        this.RuleList[i].crontimeCheck();
+        //    }
+        //}
+
+        this.setDeviceState(this.getEndpointState());
         
     }
 
@@ -105,15 +110,23 @@ class RuleContainer {
         return dvState;
     }
 
+    getEndpointState() {
+  
+        var dv_2 = {
+            ItemID: '0x00dc526628564-3', ItemStateValue: 0
+        };
+
+        return dv_2;
+    }
+
     setDeviceState(deviceEndpoint) {
         //1. goi danh sach cac rule dang chay, quet danh sach rule
         // kiem tra neu rule.cronEx != null => rule.cronEx(deviceEndpoint);
-        var ruleValid = MapRule(deviceEndpoint, new Date(Date.now()));
+        var ruleValid = this.MapRule(deviceEndpoint, new Date(Date.now()));
+        //console.log(ruleValid);
         if (ruleValid !== undefined && ruleValid.length !== 0) {
-            for (i = 0; i < ruleValid.length; i++) {
-                if (ruleValid[i].inputCheck() == true) {
-                    ruleValid[i].execute();
-                }
+            for (let i = 0; i < ruleValid.length; i++) {
+                ruleValid[i].cronExe();
             }
         }
     }
@@ -126,15 +139,15 @@ class RuleContainer {
     //Neu hai dieu kien tren thoa man, ta check seqInput va cac input con lai
     //Neu tat ca cac dieu kien khop thi thuc thi rule bang cach call toi ham execute cua doi tuong RuleItem
     MapRule(deviceEndpoint, currentTime) {
-        var ruleMapArr;
-        var inputList = getInputList();
-        var triggerList = getTriggerList();
-        var ruleValid;
+        var ruleMapArr = [];
+        var inputList = this.getInputList();
+        var triggerList = this.getTriggerList();
+        var ruleValid = [];
         if (inputList !== undefined && inputList.length !== 0) {
-            for (i = 0; i < inputList.length; i++) {
-                for (j = 0; j < inputList[i].input.RuleInput.length; j++) {
-                    if (inputList[i].input.RuleInput[j].ItemID === deviceEndpoint.ItemID) {
-                        var r = getRuleFromId(inputList[i].id);
+            for (let i = 0; i < inputList.length; i++) {
+                for (let j = 0; j < inputList[i].input.length; j++) {
+                    if (inputList[i].input[j].ItemID === deviceEndpoint.ItemID) {
+                        var r = this.getRuleFromId(inputList[i].id);
                         ruleMapArr.push(r);
                         break;
                     }
@@ -143,9 +156,9 @@ class RuleContainer {
             }
         }
         if (ruleMapArr !== undefined && ruleMapArr.length !== 0) {
-            for (i = 0; i < ruleMapArr.length; i++) {
-                if (ruleMapArr[i].RuleTrigger !== undefined && Util.UTILS.isEmptyObject(ruleMapArr[i].RuleTrigger) === false) {
-                    if (Util.checkTime(currentTime, ruleMapArr[i].RuleTrigger.configuration.start, ruleMapArr[i].RuleTrigger.configuration.end) === true) {
+            for (let i = 0; i < ruleMapArr.length; i++) {
+                if (ruleMapArr[i].RuleTrigger !== undefined && UTILS.isEmptyObject(ruleMapArr[i].RuleTrigger) === false) {
+                    if (UTILS.checkTime(currentTime, ruleMapArr[i].RuleTrigger.start, ruleMapArr[i].RuleTrigger.end) === true) {
                         ruleValid.push(ruleMapArr[i]);
                     }
                 }
@@ -154,6 +167,7 @@ class RuleContainer {
                 }
             }
         }
+        return ruleValid;
     }
 }
 

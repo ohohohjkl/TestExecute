@@ -48,7 +48,7 @@ class CronTime {
 			if (res[1].indexOf('/') > -1) {
 				var tmp = res[1].split('/');
 				if (tmp[1] === '1') {
-					for (i = res[0]; i < (tmp[0] + 1); i++) {
+                    for ( let i = res[0]; i < (tmp[0] + 1); i++) {
 						r.push(i);
 					}
 				}
@@ -57,7 +57,7 @@ class CronTime {
 				}
 			}
 			else {
-				for (i = res[0]; i < res[1] + 1; i++) {
+                for (let i = res[0]; i < res[1] + 1; i++) {
 					r.push(i);
 				}
 			}
@@ -71,12 +71,12 @@ class CronTime {
 			var res = v.split('/');
 			if (res[1] === '1') {
 				if (res[0] === '*') {
-					for (i = 1; i < 8; i++) {
+                    for (let i = 1; i < 8; i++) {
 						r.push(i);
 					}
 				}
 				else {
-					for (i = res[0]; i < 8; i++) {
+                    for (let i = res[0]; i < 8; i++) {
 						r.push(i);
 					}
 				}
@@ -88,21 +88,26 @@ class CronTime {
 		}
 	}
 	
-	getValueDayOfWeek() {
+    getValueDayOfWeek() {
+        if (this.dayOfWeek == "*") {
+            r = [];
+            r.push(new Date(Date.now()).getDay());
+            return r;
+        }
 		if (this.dayOfWeek.indexOf(',') > -1) {
-			var r;
+			var r = [];
 			var res = this.dayOfWeek.split(',');
-			for (i = 0; i < res.length; i++) {
+            for (let i = 0; i < res.length; i++) {
 				if (res[i].indexOf('-') > -1) {
 					var tmp = getRangeValuesDow(res[i]);
-					for (j = 0; j < tmp.length; j++) {
+                    for (let j = 0; j < tmp.length; j++) {
 						r.push(tmp[j]);
 					}
 				}
 				else {
 					if (res[i].indexOf('/')) {
 						var tmp = getStepValuesDow(res[i]);
-						for (j = 0; j < tmp.length; j++) {
+                        for (let j = 0; j < tmp.length; j++) {
 							r.push(tmp[j]);
 						}
 					}
@@ -115,7 +120,7 @@ class CronTime {
 		else {
 			if (this.dayOfWeek.indexOf('-') > -1) {
 				var res = this.getRangeValuesDow();
-				for (i = 0; i < res.length; i++) {
+                for (let i = 0; i < res.length; i++) {
 					r.push(res[i]);
 				}
 			}

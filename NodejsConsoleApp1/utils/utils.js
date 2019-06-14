@@ -20,11 +20,12 @@ class Util {
 		var dayOfWeek = t.getDay();
 		
 		var crontime = new CronTime(minute, hour, dayOfMonth, month, dayOfWeek);
-		var startObj = getCronObjFromExpression(start);
-		var endObj = getCronObjFromExpression(end);
-		
-		
-		if (startObj.getValueDayOfWeek().indexOf(crontime.dayOfWeek) > -1) {
+		var startObj = this.getCronObjFromExpression(start);
+        var endObj = this.getCronObjFromExpression(end);
+
+        console.log(startObj.getValueDayOfWeek());
+
+        if (startObj.getValueDayOfWeek().indexOf(crontime.dayOfWeek) > -1) {
 			var dateCron = new Date();
 			var dateStart = new Date();
 			var dateEnd = new Date();

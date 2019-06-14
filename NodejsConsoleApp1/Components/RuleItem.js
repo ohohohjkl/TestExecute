@@ -2,11 +2,11 @@
 var schedule = require("node-schedule");
 var UTIL = require("../utils/utils");
 var CONTAINER = require("../Components/RuleContainer");
-function ahi(r,delay) {
+function ahi(r,delay,id,ruleName) {
     if (r == 1) {
-        console.log("Event/Delayed: on " + delay);
+        console.log(ruleName+ ": " +id+ " Event/Delayed: on " + delay);
     } else {
-        console.log("Event/Delayed: off " + delay);
+        console.log(ruleName + ": "+ id+ " Event/Delayed: off " + delay);
     }
 }
 
@@ -76,7 +76,8 @@ class RuleItem {
     async inputCheck() {
         var delayArray;
         var InputFlag = false;
-        for (i = 0; i < this.RuleInput.length; i++) {
+        console.log(this.RuleName, "StartCheckInput");
+        for (let i = 0; i < this.RuleInput.length; i++) {
             if (this.RuleInput[i].getNStateDelay() !== 0) {
                 try {
                     await UTIL.sleep(this.RuleInput[i].getNStateDelay());
@@ -88,8 +89,9 @@ class RuleItem {
             
             var dvState = CONTAINER.getDeviceState();
             var input = this.getRuleInput();
-            for (j = 0; j < dvState.length; j++) {
-                if (dvState[j].ItemID === input[i].ItemID) {
+            for (let j = 0; j < dvState.length; j++) {
+                //console.log(i);
+                if (dvState[j].ItemID === this.getRuleInput()[i].ItemID) {
                     if (dvState[j].ItemStateValue === input[i].getItemState()) {
                         InputFlag = true;
                     }
@@ -115,6 +117,9 @@ class RuleItem {
                 if (val === true) {
                     this.execute();
                 }
+                else {
+                    console.log(this.RuleName + " F")
+                }
             }
         ).catch(
             function (reason) {
@@ -135,21 +140,23 @@ class RuleItem {
         if (this.RuleTrigger !== undefined) {
             var start = this.RuleTrigger.start;
             var end = this.RuleTrigger.end;
+            
             schedule.scheduleJob(start, this.cronExe);
         }
         else {
             this.cronExe();
         }
+    }
 
-        
-
+    crontimeCheck() {
+            this.cronExe();
     }
 
     //ham thuc thi cac output cua rule
     execute() {
-        console.log(123, "ahi");
-        for (i = 0; i < this.RuleOutput.length; i++) {
-            this.RuleOutput[i].getStateDelayed(this.RuleOutput[i].getNStateDelay(), ahi);
+        console.log(this.RuleName+ " start Execute");
+        for (let i = 0; i < this.RuleOutput.length; i++) {
+            this.RuleOutput[i].getStateDelayed(this.RuleOutput[i].getNStateDelay(), this.RuleName, ahi);
         }
     }
 };

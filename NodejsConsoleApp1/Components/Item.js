@@ -13,6 +13,7 @@ class Item {
         this.ItemStateProp = prop;
         this.ItemStateValue = value;
         this.ItemDelay = delay;
+        this.getItemID = this.getItemID.bind(this);
     }
     //get ItemID() {
     //    return this.ItemID;
@@ -45,6 +46,10 @@ class Item {
     //    this.ItemDelay = delay;
     //}
 
+    getItemID() {
+        return this.ItemID;
+    }
+
     getNStateDelay() {
         return this.ItemDelay;
     }
@@ -52,9 +57,9 @@ class Item {
         return this.ItemStateValue;
     }
 
-    async getStateDelayed(delay, getState) {
+    async getStateDelayed(delay,ruleName, getState) {
         await sleep(delay);
-        getState(this.ItemStateValue, this.ItemDelay);
+        getState(this.ItemStateValue, this.ItemDelay, this.ItemID, ruleName);
     }
 
     async setStateDelayed(delay, setState) {

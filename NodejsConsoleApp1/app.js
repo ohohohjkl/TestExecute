@@ -60,7 +60,6 @@ if (!UTILS.isEmptyObject(ruleConfig) && lengthOfRule !== 0) {
                     , ruleConfig[key].input[i].state.prop, ruleConfig[key].input[i].state.value, delay
                     );
                 inputRuleList.push(inputRule);
-                console.log(111, inputRule);
             }
         }
 
@@ -97,7 +96,7 @@ if (!UTILS.isEmptyObject(ruleConfig) && lengthOfRule !== 0) {
             //console.log(333, start + ": " + end + ": " + counter.toString());
         }
 
-        var ruleItem = new RULE(ruleConfig[key].id, "ahi", trigger
+        var ruleItem = new RULE(ruleConfig[key].id, ruleConfig[key].name, trigger
             , inputRuleList, outputRuleList,"AND");
 
         rule_list.push(ruleItem);
@@ -105,6 +104,7 @@ if (!UTILS.isEmptyObject(ruleConfig) && lengthOfRule !== 0) {
     }
 }
 
+console.log(111, rule_list);
 
 ruleContainer.RuleList = rule_list;
 ruleContainer.startRuleList();
