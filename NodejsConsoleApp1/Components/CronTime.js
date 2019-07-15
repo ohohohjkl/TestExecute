@@ -99,29 +99,21 @@ class CronTime {
 			var res = this.dayOfWeek.split(',');
             for (let i = 0; i < res.length; i++) {
 				if (res[i].indexOf('-') > -1) {
-					var tmp = getRangeValuesDow(res[i]);
+                    var tmp = this.getRangeValuesDow(res[i]);
                     for (let j = 0; j < tmp.length; j++) {
 						r.push(tmp[j]);
 					}
 				}
 				else {
-					if (res[i].indexOf('/')) {
-						var tmp = getStepValuesDow(res[i]);
+                    if (res[i].indexOf('/') > -1) {
+						var tmp = this.getStepValuesDow(res[i]);
                         for (let j = 0; j < tmp.length; j++) {
 							r.push(tmp[j]);
 						}
 					}
 					else {
-						r.push(res[i]);
+						r.push(parseInt(res[i]));
 					}
-				}
-			}
-		}
-		else {
-			if (this.dayOfWeek.indexOf('-') > -1) {
-				var res = this.getRangeValuesDow();
-                for (let i = 0; i < res.length; i++) {
-					r.push(res[i]);
 				}
 			}
 		}

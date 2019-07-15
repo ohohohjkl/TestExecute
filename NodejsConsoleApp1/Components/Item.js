@@ -1,4 +1,4 @@
-﻿"use strict"
+﻿
 function sleep(ms) {
     return new Promise(resolve => {
         setTimeout(resolve, ms)
@@ -6,69 +6,122 @@ function sleep(ms) {
 }
 
 class Item {
-
-    constructor(id, type, prop, value, delay) {
+    constructor(id, type, name, prop, value, opt, delay, loop, keep_alive) {
         this.ItemID = id;
         this.ItemType = type;
+        this.ItemName = name;
         this.ItemStateProp = prop;
         this.ItemStateValue = value;
+        this.ItemStateOperator = opt;
         this.ItemDelay = delay;
-        this.getItemID = this.getItemID.bind(this);
+        this.ItemLoop = loop;
+        this.ItemInit = 0;
+        this.ItemAliveTime = keep_alive;
+        this.ItemTimeout = null;
+        this.ItemTimeoutValid = false;
+        this.ItemVisited = false;
+        this.IncludedBy = null;
     }
-    //get ItemID() {
-    //    return this.ItemID;
-    //}
-    //set ItemID(id) {
-    //    this.ItemID = id;
-    //}
-    //get ItemType() {
-    //    return this.ItemType;
-    //}
-    //set ItemType(type) {
-    //    this.ItemType = type;
-    //}
-    //get ItemStateProp() {
-    //    return this.ItemStateProp;
-    //}
-    //set ItemStateProp(prop) {
-    //    this.ItemStateProp = prop;
-    //}
-    //get ItemStateValue() {
-    //    return this.ItemStateValue;
-    //}
-    //set ItemStateValue(value) {
-    //    this.ItemStateValue = value;
-    //}
-    //get ItemDelay() {
-    //    return this.ItemDelay;
-    //}
-    //set ItemDelay(delay) {
-    //    this.ItemDelay = delay;
-    //}
 
     getItemID() {
         return this.ItemID;
     }
 
+    getItemName() {
+        return this.ItemName;
+    }
+
     getNStateDelay() {
         return this.ItemDelay;
     }
+
     getItemState() {
         return this.ItemStateValue;
     }
 
-    async getStateDelayed(delay,ruleName, getState) {
-        await sleep(delay);
-        getState(this.ItemStateValue, this.ItemDelay, this.ItemID, ruleName);
+    getItemStateProp() {
+        return this.ItemStateProp;
     }
 
-    async setStateDelayed(delay, setState) {
-        await sleep(delay);
-        if (type == "device") {
-            setState(this.ItemStateValue);
-        }
+    getItemStateOpt() {
+        return this.ItemStateOperator;
+    }
 
+    getItemType() {
+        return this.ItemType;
+    }
+
+    getItemLoop() {
+        return this.ItemLoop;
+    }
+
+    getItemInit() {
+        return this.ItemInit;
+    }
+
+    getItemTimeOut() {
+        return this.ItemTimeout;
+    }
+
+    getItemAliveTime() {
+        return this.ItemAliveTime;
+    }
+
+    getItemIncluded() {
+        return this.IncludedBy;
+    }
+    setTimeoutValid(valid) {
+        this.ItemTimeoutValid = valid;
+    }
+
+    checkTimeoutValid() {
+        return this.ItemTimeoutValid === true ? true : false;
+    }
+    async sleepIn() {
+        return new Promise(resolve => {
+            this.ItemTimeout = setTimeout(resolve, this.ItemAliveTime);
+        })
+    }
+
+    async itemAwait() {
+        //await new Promise(resolve => {
+        //    this.ItemTimeout = setTimeout(resolve, this.ItemAliveTime);
+        //})
+        await this.sleepIn();
+        this.setTimeoutValid(true);
+        this.resetItemTimeout();
+        console.log(this);
+        return this.ItemID;
+    }
+    resetItemTimeout() {
+        if (this.ItemTimeout) {
+            clearTimeout(this.ItemTimeout);
+        }
+        this.ItemTimeout = null;
+    }
+    restartItemInitTo(val) {
+        this.ItemInit = val;
+    }
+
+    IncreaseItemInit() {
+        this.ItemInit += 1;
+    }
+
+    checkItemCounter() {
+        return this.ItemInit === this.ItemLoop ? true : false
+    }
+
+    checkItemCounterForReset() {
+        return this.ItemInit === (this.ItemLoop + 1) ? true : false
+    }
+
+    setItemVisited(val) {
+        this.ItemVisited = true;
+    }
+
+    IncludedByItem(ID) {
+        this.IncludedBy = ID;
     }
 }
 
-module.exports = Item
+module.exports = Item;

@@ -45,9 +45,12 @@
     <Compile Include="Components\Trigger.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="utils\utils.js" />
+    <Compile Include="utils\RuleUtils.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="utils\1.json" />
+    <Content Include="utils\rule.json" />
+    <Content Include="utils\rule2.json" />
     <Content Include="utils\rule_def_temp.json" />
   </ItemGroup>
   <ItemGroup>

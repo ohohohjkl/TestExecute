@@ -1,0 +1,197 @@
+[
+	{
+		"name": "An ninh",
+		"type": "device",
+		"id": "1gyh9da8a6",
+		"trigger": {
+			"type": "timer",
+      "configuration": {
+        "startTime": "17:26",
+        "endTime": "23:59",
+        "isOnlyDay": false,
+        "cronExpression": "* * * * * 1,3,5,6,7"
+      }
+		},
+		"input": [
+			{
+				"id": "0x000B57FFFE4F4F12-1",
+				"name": "Light",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				}
+			},
+			{
+				"id": "0x000B57FFFE4F4F12-7",
+				"name": "Light",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				}
+			}
+		],
+		"output": [
+			{
+				"id": "0x00124B001BBA1F74-2",
+				"name": "Công tắc - HA.2",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				},
+				"delay": 6000
+			},
+			{
+				"id": "0x00124B001BBA1F74-1",
+				"name": "Công tắc - HA.1",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				},
+				"delay": 1000
+			},
+      {
+        "id": "0x00124B001BBA1F74-3",
+        "name": "Công tắc - HA.3",
+        "type": "Switch",
+        "state": {
+          "prop": "onOff",
+          "value": 1
+        },
+        "delay": 2000
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-8",
+        "name": "Công tắc - HA.8",
+        "type": "Switch",
+        "state": {
+          "prop": "onOff",
+          "value": 1
+        },
+        "delay": 1000
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-7",
+        "name": "Công tắc - L.7",
+        "type": "Switch",
+        "state": {
+          "prop": "onOff",
+          "value": 0
+        },
+        "delay": 0
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-5",
+        "name": "Công tắc - L.5",
+        "type": "Switch",
+        "state": {
+          "prop": "onOff",
+          "value": 0
+        },
+        "delay": 1000
+      }
+		],
+		"seq_in": [
+      {
+        "id": "0x000B57FFFE4F4F12-7",
+        "delay": 2000
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-1",
+        "delay": 3000
+      }
+		]
+	},
+	{
+		"name": "My rule",
+		"type": "device",
+		"input": [
+			{
+				"id": "0x000B57FFFE44457E-1",
+				"name": "Smart Plug",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			},
+			{
+				"id": "0x000B57FFFE4F4F12-1",
+				"name": "Light",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			},
+			{
+				"id": "0x000B57FFFE4F4F12-7",
+				"name": "Light",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				}
+			}
+		],
+		"output": [
+			{
+				"id": "0x000B57FFFE44457E-1",
+				"name": "Smart Plug.1",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 1
+				},
+				"delay": 18000
+			},
+			{
+				"id": "0x000B57FFFE4F4F12-4",
+				"name": "Công tắc - HA.4",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				},
+				"delay": 21600
+			},
+			{
+				"id": "0x000B57FFFE4F4F12-7",
+				"name": "Công tắc - L.7",
+				"type": "Switch",
+				"state": {
+					"prop": "onOff",
+					"value": 0
+				},
+				"delay": 0
+			}
+		],
+		"trigger": {
+			"type": "timer",
+      "configuration": {
+        "startTime": "17:26",
+        "endTime": "23:59",
+        "isOnlyDay": false,
+        "cronExpression": "* * * * * 1,3,5,6,7"
+      }
+		},
+		"id": "ock3zx51dm",
+    "seq_in": [
+      {
+        "id": "0x000B57FFFE44457E-1",
+        "delay": 2000
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-7",
+        "delay": 3000
+      },
+      {
+        "id": "0x000B57FFFE4F4F12-1",
+        "delay": 3000
+      }
+    ]
+	}
+]

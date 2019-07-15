@@ -1,0 +1,120 @@
+{
+	"1133456": {
+		"id": "1133456",
+		"name": "Tưới cây",
+		"active": true,
+		"mode": "or",
+		"trigger": {
+			"type": "timer",
+      "configuration": {
+        "start": "0 8 * * *",
+        "end": "0 23 * * *",
+        "counter": null
+      }					    
+		}, 
+		"order_input": false, // true
+		"input": [
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-3",
+				"state": {
+					"prop": "onOff",
+					"value": 1,
+					"operator": "eq",
+					"keep_alive": 60000,
+					"repeat": null
+				}
+			},
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-7",
+				"state": {
+					"prop": "level",
+					"value": 50,
+					"operator": "gt",
+					"keep_alive": null,
+					"repeat": 3
+				}
+			}		 
+		 ],	 
+		 "output": [
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-1",
+				"state": [{
+					"prop": "onOff",
+					"value": 0
+				}]
+			},
+			{	
+				"type": "device",
+			    "id": "0x000B57FFFE4F4F12-5",
+				"state": [{
+					"prop": "onOff",
+					"value": 0
+				}]
+			}
+		 ],
+	},
+	"1133567": {
+		"id": "1133567",
+		"name": "An ninh vào nhà",
+		"active": false,
+		"trigger": {
+			"type": "timer",	
+			"configuration": {				
+				"start": "*/1 * * * *",
+				"end" : "*/1 * * * *",
+				"counter": 1
+			}							    
+		},
+		 
+		 "input": [
+			{	
+				"type": "device",
+			    "id": "12351",
+				"state": [{
+					"prop": "onOff",
+					"value": 0
+				}]
+			},
+			{	
+				"type": "device",
+			    "id": "12361",
+				"state": [{
+					"prop": "onOff",
+					"value": 0
+				}]
+			}		 
+		 ],	 
+		 "output": [
+			{	
+				"type": "device",
+			    "id": "12351",
+				"state": [{
+					"prop": "onOff",
+					"value": 1
+				}],
+				"delay": 5000
+			},
+			{	
+				"type": "device",
+			    "id": "12361",
+				"state": [{
+					"prop": "onOff",
+					"value": 1
+				},
+				{
+					"prop": "brightNess",
+					"value": 90
+				}],
+				"delay": 0
+			},
+			{	
+				"type": "notice",
+				"value": "Co nguoi vao nha",
+				"delay": 0
+			},
+		 ]
+	}
+}

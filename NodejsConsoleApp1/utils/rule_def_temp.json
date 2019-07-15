@@ -5,8 +5,8 @@
     "trigger": {
       "type": "timer",
       "configuration": {
-        "start": "20 12 * * * ",
-        "end": "33 12 * * * ",
+        "start": "38 15 * * * ",
+        "end": "38 15 * * * ",
         "counter": 1
       }
     },
@@ -57,8 +57,8 @@
     "trigger": {
       "type": "timer",
       "configuration": {
-        "start": "20 12 * * *",
-        "end": "33 12 * * * ",
+        "start": "38 15 * * *",
+        "end": "38 15 * * * ",
         "counter": 1
       }
     },
@@ -127,8 +127,8 @@
     "trigger": {
       "type": "timer",
       "configuration": {
-        "start": "20 12 * * *",
-        "end": "33 12 * * * ",
+        "start": "38 15 * * *",
+        "end": "38 15 * * * ",
         "counter": 1
       }
     },

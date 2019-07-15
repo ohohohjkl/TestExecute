@@ -1,0 +1,126 @@
+{
+  "1133456": {
+    "id": "1133456",
+    "name": "Tưới cây",
+    "active": true,
+    "mode": "and",
+    "order_input": true,
+    "trigger": {
+      "type": "timer",
+      "configuration": {
+        "start": "0 1 * * *",
+        "end": "0 24 * * *",
+        "counter": 0
+      }
+    },
+
+    "input": [
+      {
+        "type": "device",
+        "id": "0x000B57FFFE4F4F12-7",
+        "state": {
+          "prop": "onOff",
+          "value": 0,
+          "operator": "eq"
+        },
+        "keep_alive": null,
+        "repeat": 5
+      },
+      {
+        "type": "device",
+        "id": "0x000B57FFFE4F4F12-3",
+        "state": {
+          "prop": "onOff",
+          "value": 1,
+          "operator": "eq"
+        },
+        "keep_alive": 7000,
+        "repeat": null
+      },
+      {
+        "type": "device",
+        "id": "12361",
+        "state": {
+          "prop": "onOff",
+          "value": 1
+        },
+        "keep_alive": 2000,
+        "repeat":null
+      }
+    ],
+    "output": [
+      {
+        "type": "device",
+        "id": "0x000B57FFFE4F4F12-1",
+        "state": {
+          "prop": "onOff",
+          "value": 0
+        },
+        "delay": 5000
+      },
+      {
+        "type": "device",
+        "id": "0x000B57FFFE4F4F12-5",
+        "state": {
+          "prop": "onOff",
+          "value": 0
+        },
+        "delay": 5000
+      }
+    ]
+  },
+  "1133567": {
+    "id": "1133567",
+    "name": "An ninh vào nhà",
+    "active": false,
+    "trigger": {
+      "type": "timer",
+      "configuration": {
+        "start": "0 8 * * *",
+        "end": "0 23 * * *",
+        "counter": 1
+      }
+    },
+    "input": [
+      {
+        "type": "device",
+        "id": "12351",
+        "state": {
+          "prop": "onOff",
+          "value": 0,
+          "operator": "eq"
+        }
+
+      },
+      {
+        "type": "device",
+        "id": "12361",
+        "state": {
+          "prop": "onOff",
+          "value": 1
+        },
+        "delay": 0
+      },
+      {
+        "type": "device",
+        "id": "12361",
+        "state": {
+          "prop": "brightNess",
+          "value": 90
+        },
+        "delay": 0
+      }
+    ],
+    "output": [
+      {
+        "type": "device",
+        "id": "12351",
+        "state": {
+          "prop": "onOff",
+          "value": 1
+        },
+        "delay": 5000
+      }
+    ]
+  }
+}

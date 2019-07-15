@@ -1,11 +1,12 @@
 ﻿"use strict"
 
-var UTILS = require('../utils/utils');
+var UTILS = require("../utils/RuleUtils");
 
 class RuleContainer {
-    constructor(rules) {
-        this.RuleList = rules;
+    constructor() {
         this.getEndpointState = this.getEndpointState.bind(this);
+        this.getDeviceState = this.getDeviceState.bind(this);
+
         this.MapRule = this.MapRule.bind(this);
 
     }
@@ -58,6 +59,7 @@ class RuleContainer {
         return x;
     }
 
+
     //get Rule from id
     getRuleFromId(id) {
         if (this.RuleList !== undefined && this.RuleList.length !== 0) {
@@ -71,54 +73,57 @@ class RuleContainer {
     }
 
     //start list rule()
-    startRuleList() {
-        //set rulelist run phuong thuc crontime
-        //if (this.RuleList !== undefined && this.RuleList.length !== 0) {
-        //    for (let i = 0; i < this.RuleList.length; i++) {
-        //        this.RuleList[i].crontimeCheck();
-        //    }
-        //}
-
-        this.setDeviceState(this.getEndpointState());
+    initAndStartScheduler(rules) {
         
+        this.RuleList = UTILS.getRuleFromJsonObj(rules);
+        ////set rulelist run phuong thuc crontime
+        if (this.RuleList !== undefined && this.RuleList.length !== 0) {
+            for (let i = 0; i < this.RuleList.length; i++) {
+                this.RuleList[i].crontimeCheck();
+            }
+        }
+         //start Cron Scheduler based on Start Trigger
+         //this.setDeviceState(this.getEndpointState());
     }
 
     //Ham getDeviceState su dung API cua gateway de cap nhat state cua tat ca cac thiet bi
-//    "type": "device",
-//    "id": "0x000B57FFFE4F4F12-3",
-//    "state": {
-//        "prop": "onOff",
-//        "value": 1
-//    }
-//},
-//{
-//    "type": "device",
-//        "id": "0x000B57FFFE4F4F12-7",
-//            "state": {
-//        "prop": "onOff",
-//           
-    static getDeviceState() {
-        var dvState = [];
-        var dv_1 = {
-            ItemID: '0x00dc526737282-1',ItemStateValue: 0
-        };
-        var dv_2 = {
-            ItemID: '0x00dc526628564-3', ItemStateValue: 0
-        };
-        dvState.push(dv_1);
-        dvState.push(dv_2);
-        return dvState;
+    //    "type": "device",
+    //    "id": "0x000B57FFFE4F4F12-3",
+    //    "state": {
+    //        "prop": "onOff",
+    //        "value": 1
+    //    }
+    //},
+    //{
+    //    "type": "device",
+    //        "id": "0x000B57FFFE4F4F12-7",
+    //            "state": {
+    //        "prop": "onOff",
+    //           
+    getDeviceState(itemID) {
+        var devs = this.getInputList();
+
+        for (let i = 0; i < devs.length; i++) {
+            for (let j = 0; j < devs[i].input.length;j++) {
+                if (itemID == devs[i].input[j].getItemID()) {
+                    return devs[i].input[j];
+                }
+            }
+        }
+        return "undefined";
     }
 
     getEndpointState() {
-  
+
         var dv_2 = {
-            ItemID: '0x00dc526628564-3', ItemStateValue: 0
+            ItemID: '0x000B57FFFE4F4F12-1', ItemStateValue: 1
         };
 
         return dv_2;
     }
 
+    //Implement event "StateDeviceUpdate" called from device
+    //deviceEnpoint contains info in the device
     setDeviceState(deviceEndpoint) {
         //1. goi danh sach cac rule dang chay, quet danh sach rule
         // kiem tra neu rule.cronEx != null => rule.cronEx(deviceEndpoint);
@@ -126,7 +131,7 @@ class RuleContainer {
         //console.log(ruleValid);
         if (ruleValid !== undefined && ruleValid.length !== 0) {
             for (let i = 0; i < ruleValid.length; i++) {
-                ruleValid[i].cronExe();
+                ruleValid[i].cronExe(deviceEndpoint);
             }
         }
     }
@@ -171,4 +176,5 @@ class RuleContainer {
     }
 }
 
-module.exports = RuleContainer;
+let ruleContainer = new RuleContainer();
+module.exports = ruleContainer;
